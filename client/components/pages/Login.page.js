@@ -3,12 +3,13 @@ import { useHistory, Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/Auth.context';
 
 const LoginPage = () => {
+  const history = useHistory();
   const [login, setLogin] = useState();
+	const { user, setUser } = useContext(AuthContext);
 
   const signinHandler = (e) => {
 		e.preventDefault();
-    // signin();
-    console.log("User Data: ", login);
+    signin();
 	}
 
   const signin = () => {
@@ -19,9 +20,10 @@ const LoginPage = () => {
 		})
 		.then(response => response.json())
 		.then(data => {
+      console.log("signin: ", user);
 			setUser(data);
       history.push({
-				pathname:`/dashboard`
+				pathname:`/search-spots`
 			});	
 		})
   } 
@@ -52,9 +54,7 @@ const LoginPage = () => {
 
           </div>
           <div className="checkbox mb-3">
-            <label>
-              <input type="checkbox" value="remember-me" /> Remember me
-            </label>
+              <Link to='/signup'>Create Account</Link>
           </div>
           <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
           <p className="mt-5 mb-3 text-muted">© 2017–2021</p>
